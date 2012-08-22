@@ -5,15 +5,15 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	0.6.0
+Version:	0.9.3
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	993807eb81ad61e08d50f28b57baf405
+# Source0-md5:	883a40644d3b120b7013e11876ea5af3
 URL:		http://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	cairo-devel >= 1.8.0
-BuildRequires:	freetype-devel >= 2
+BuildRequires:	freetype-devel >= 2.3.8
 BuildRequires:	glib2-devel >= 1:2.16
 BuildRequires:	libicu-devel
 BuildRequires:	libstdc++-devel
@@ -82,7 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# .la kept - no .private dependencies in .pc
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -93,6 +93,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYING ChangeLog README TODO
+%attr(755,root,root) %{_bindir}/hb-ot-shape-closure
+%attr(755,root,root) %{_bindir}/hb-shape
 %attr(755,root,root) %{_bindir}/hb-view
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
@@ -100,7 +102,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
-%{_libdir}/libharfbuzz.la
 %{_includedir}/harfbuzz
 %{_pkgconfigdir}/harfbuzz.pc
 
