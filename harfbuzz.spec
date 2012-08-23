@@ -35,9 +35,10 @@ Summary:	Header files for HarfBuzz library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	cairo-devel >= 1.8.0
+Requires:	freetype-devel >= 2.3.8
 Requires:	glib2-devel >= 1:2.16
 Requires:	graphite2-devel
+Requires:	libicu-devel
 Requires:	libstdc++-devel
 
 %description devel
