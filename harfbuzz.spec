@@ -14,6 +14,7 @@ Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}
 URL:		http://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	cairo-devel >= 1.8.0
 BuildRequires:	freetype-devel >= 2.3.8
+BuildRequires:	graphite2-devel
 BuildRequires:	glib2-devel >= 1:2.16
 BuildRequires:	libicu-devel
 BuildRequires:	libstdc++-devel
@@ -36,6 +37,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	cairo-devel >= 1.8.0
 Requires:	glib2-devel >= 1:2.16
+Requires:	graphite2-devel
 Requires:	libstdc++-devel
 
 %description devel
@@ -75,6 +77,11 @@ Dokumentacja API biblioteki HarfBuzz.
 	--disable-silent-rules \
 	%{?with_static_libs:--enable-static}
 %{__make}
+
+# missing
+cat >> harfbuzz.pc <<EOF
+Requires.private: glib-2.0 gobject-2.0 icu-uc freetype2 graphite2
+EOF
 
 %install
 rm -rf $RPM_BUILD_ROOT
