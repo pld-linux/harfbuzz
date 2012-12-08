@@ -87,7 +87,9 @@ EOF
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+# parallel install broken (hb-version.h both in pkginclude_HEADERS and
+# nodist_pkginclude_HEADERS)
+%{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
