@@ -7,17 +7,19 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	0.9.19
+Version:	0.9.20
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	9782581ee6ef972554772e84ca448131
+# Source0-md5:	fe36a04a61a2562b8522d516fb36309d
 URL:		http://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	cairo-devel >= 1.8.0
 BuildRequires:	freetype-devel >= 2.3.8
 BuildRequires:	glib2-devel >= 1:2.16
+BuildRequires:	gobject-introspection-devel >= 1.32.0
 %{?with_graphite2:BuildRequires:	graphite2-devel}
+BuildRequires:	gtk-doc >= 1.15
 %{?with_icu:BuildRequires:	libicu-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig >= 1:0.20
@@ -61,17 +63,6 @@ Static HarfBuzz library.
 %description static -l pl.UTF-8
 Statyczna biblioteka HarfBuzz.
 
-%package apidocs
-Summary:	HarfBuzz API documentation
-Summary(pl.UTF-8):	Dokumentacja API biblioteki HarfBuzz
-Group:		Documentation
-
-%description apidocs
-API and internal documentation for HarfBuzz library.
-
-%description apidocs -l pl.UTF-8
-Dokumentacja API biblioteki HarfBuzz.
-
 %package icu
 Summary:	HarfBuzz text shaping library - ICU integration
 Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - integracja z ICU
@@ -110,12 +101,23 @@ Static HarfBuzz ICU library.
 %description icu-static -l pl.UTF-8
 Biblioteka statyczna HarfBuzz ICU.
 
+%package apidocs
+Summary:	HarfBuzz API documentation
+Summary(pl.UTF-8):	Dokumentacja API bibliotek HarfBuzz
+Group:		Documentation
+
+%description apidocs
+API documentation for HarfBuzz libraries.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API bibliotek HarfBuzz.
+
 %prep
 %setup -q
 
 # missing dependencies
 cat >> src/harfbuzz.pc.in <<EOF
-Requires.private: glib-2.0 gobject-2.0 freetype2%{?with_graphite2: graphite2}
+Requires.private: glib-2.0 freetype2%{?with_graphite2: graphite2}
 EOF
 
 %build
@@ -125,7 +127,9 @@ EOF
 	--with-cairo \
 	--with-freetype \
 	--with-glib \
+	--with-gobject \
 	%{?with_graphite2:--with-graphite2} \
+	--with-html-dir=%{_gtkdocdir} \
 	--with-icu%{!?with_icu:=no}
 %{__make}
 
@@ -154,19 +158,27 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hb-view
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
+%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
+%{_libdir}/girepository-1.0/harfbuzz-0.0.typelib
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
+%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
 %dir %{_includedir}/harfbuzz
 %{_includedir}/harfbuzz/hb.h
 %{_includedir}/harfbuzz/hb-blob.h
 %{_includedir}/harfbuzz/hb-buffer.h
 %{_includedir}/harfbuzz/hb-common.h
+%{_includedir}/harfbuzz/hb-deprecated.h
+%{_includedir}/harfbuzz/hb-face.h
 %{_includedir}/harfbuzz/hb-font.h
 %{_includedir}/harfbuzz/hb-ft.h
 %{_includedir}/harfbuzz/hb-glib.h
 %{_includedir}/harfbuzz/hb-gobject.h
+%{_includedir}/harfbuzz/hb-gobject-enums.h
+%{_includedir}/harfbuzz/hb-gobject-structs.h
 %{?with_graphite2:%{_includedir}/harfbuzz/hb-graphite2.h}
 %{_includedir}/harfbuzz/hb-ot-layout.h
 %{_includedir}/harfbuzz/hb-ot-tag.h
@@ -176,12 +188,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-shape.h
 %{_includedir}/harfbuzz/hb-unicode.h
 %{_includedir}/harfbuzz/hb-version.h
+%{_datadir}/gir-1.0/harfbuzz-0.0.gir
 %{_pkgconfigdir}/harfbuzz.pc
+%{_pkgconfigdir}/harfbuzz-gobject.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
+%{_libdir}/libharfbuzz-gobject.a
 %endif
 
 %if %{with icu}
@@ -202,3 +217,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libharfbuzz-icu.a
 %endif
 %endif
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/harfbuzz
