@@ -3,12 +3,12 @@
 %bcond_without	static_libs	# static libraries build
 %bcond_without	graphite2	# Graphite2 library usage
 %bcond_without	icu		# ICU integration
-#
+
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
 Version:	0.9.27
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
@@ -105,6 +105,9 @@ Biblioteka statyczna HarfBuzz ICU.
 Summary:	HarfBuzz API documentation
 Summary(pl.UTF-8):	Dokumentacja API bibliotek HarfBuzz
 Group:		Documentation
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 API documentation for HarfBuzz libraries.
@@ -135,7 +138,6 @@ EOF
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
