@@ -3,16 +3,17 @@
 %bcond_without	static_libs	# static libraries build
 %bcond_without	graphite2	# Graphite2 library usage
 %bcond_without	icu		# ICU integration
+%bcond_without	tests
 
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	0.9.27
-Release:	2
+Version:	0.9.28
+Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	60e122288c0ea4d66505d4704e376a1c
+# Source0-md5:	accbeb679f39d839038b95a87e40870e
 URL:		http://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	cairo-devel >= 1.8.0
 BuildRequires:	freetype-devel >= 2.3.8
@@ -136,6 +137,8 @@ EOF
 	--with-icu%{!?with_icu:=no}
 %{__make}
 
+%{?with_tests:%{__make} check}
+
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
@@ -182,6 +185,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-gobject-enums.h
 %{_includedir}/harfbuzz/hb-gobject-structs.h
 %{?with_graphite2:%{_includedir}/harfbuzz/hb-graphite2.h}
+%{_includedir}/harfbuzz/hb-ot-font.h
 %{_includedir}/harfbuzz/hb-ot-layout.h
 %{_includedir}/harfbuzz/hb-ot-shape.h
 %{_includedir}/harfbuzz/hb-ot-tag.h
