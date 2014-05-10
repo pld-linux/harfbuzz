@@ -3,7 +3,7 @@
 %bcond_without	static_libs	# static libraries build
 %bcond_without	graphite2	# Graphite2 library usage
 %bcond_without	icu		# ICU integration
-%bcond_without	tests
+%bcond_without	tests		# "make check" call
 
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
