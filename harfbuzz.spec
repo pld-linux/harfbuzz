@@ -9,7 +9,7 @@ Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
 Version:	0.9.28
-Release:	1
+Release:	1.1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
@@ -63,6 +63,44 @@ Static HarfBuzz library.
 
 %description static -l pl.UTF-8
 Statyczna biblioteka HarfBuzz.
+
+%package gobject
+Summary:	Harfbuzz GObject interface
+Summary(pl.UTF-8):	Interfejs GObject do Harfbuzz
+Group:		Libraries
+
+%description gobject
+Harfbuzz GObject interface.
+
+%description gobject -l pl.UTF-8
+Interfejs GObject do Harfbuzz.
+
+%package gobject-devel
+Summary:	Header files for Harfbuzz GObject interface
+Summary(pl.UTF-8):	Pliki nagłówkowe interfejsu GObject do Harfbuzz
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-gobject = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.12.2
+
+%description gobject-devel
+This is the package containing the header files for Harfbuzz GObject
+interface.
+
+%description gobject-devel -l pl.UTF-8
+Ten pakiet zawiera pliki nagłówkowe interfejsu GObject do Harfbuzz.
+
+%package gobject-static
+Summary:	Static Harfbuzz GObject library
+Summary(pl.UTF-8):	Statyczna biblioteka Harfbuzz GObject
+Group:		Development/Libraries
+Requires:	%{name}-gobject-devel = %{version}-%{release}
+
+%description gobject-static
+Static Harfbuzz GObject library.
+
+%description gobject-static -l pl.UTF-8
+Statyczna biblioteka Harfbuzz GObject.
 
 %package icu
 Summary:	HarfBuzz text shaping library - ICU integration
@@ -152,6 +190,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	gobject -p /sbin/ldconfig
+%postun	gobject -p /sbin/ldconfig
+
 %post	icu -p /sbin/ldconfig
 %postun	icu -p /sbin/ldconfig
 
@@ -163,14 +204,29 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hb-view
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
+
+%files gobject
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
 %{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
 
+%files gobject-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
+%{_includedir}/harfbuzz/hb-gobject.h
+%{_includedir}/harfbuzz/hb-gobject-enums.h
+%{_includedir}/harfbuzz/hb-gobject-structs.h
+%{_pkgconfigdir}/harfbuzz-gobject.pc
+%{_datadir}/gir-1.0/HarfBuzz-0.0.gir
+
+%files gobject-static
+%defattr(644,root,root,755)
+%{_libdir}/libharfbuzz-gobject.a
+
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
-%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
 %dir %{_includedir}/harfbuzz
 %{_includedir}/harfbuzz/hb.h
 %{_includedir}/harfbuzz/hb-blob.h
@@ -181,9 +237,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-font.h
 %{_includedir}/harfbuzz/hb-ft.h
 %{_includedir}/harfbuzz/hb-glib.h
-%{_includedir}/harfbuzz/hb-gobject.h
-%{_includedir}/harfbuzz/hb-gobject-enums.h
-%{_includedir}/harfbuzz/hb-gobject-structs.h
 %{?with_graphite2:%{_includedir}/harfbuzz/hb-graphite2.h}
 %{_includedir}/harfbuzz/hb-ot-font.h
 %{_includedir}/harfbuzz/hb-ot-layout.h
@@ -195,15 +248,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-shape.h
 %{_includedir}/harfbuzz/hb-unicode.h
 %{_includedir}/harfbuzz/hb-version.h
-%{_datadir}/gir-1.0/HarfBuzz-0.0.gir
 %{_pkgconfigdir}/harfbuzz.pc
-%{_pkgconfigdir}/harfbuzz-gobject.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
-%{_libdir}/libharfbuzz-gobject.a
 %endif
 
 %if %{with icu}
