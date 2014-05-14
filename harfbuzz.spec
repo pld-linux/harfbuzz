@@ -9,7 +9,7 @@ Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
 Version:	0.9.28
-Release:	1.1
+Release:	2
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
@@ -24,7 +24,6 @@ BuildRequires:	gtk-doc >= 1.15
 %{?with_icu:BuildRequires:	libicu-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig >= 1:0.20
-Requires:	cairo >= 1.8.0
 Requires:	freetype >= 2.3.8
 Requires:	glib2 >= 1:2.16
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -68,6 +67,7 @@ Statyczna biblioteka HarfBuzz.
 Summary:	Harfbuzz GObject interface
 Summary(pl.UTF-8):	Interfejs GObject do Harfbuzz
 Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description gobject
 Harfbuzz GObject interface.
@@ -140,6 +140,15 @@ Static HarfBuzz ICU library.
 %description icu-static -l pl.UTF-8
 Biblioteka statyczna HarfBuzz ICU.
 
+%package progs
+Summary:	HarfBuzz programs
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	cairo >= 1.8.0
+
+%description progs
+HarfBuzz programs.
+
 %package apidocs
 Summary:	HarfBuzz API documentation
 Summary(pl.UTF-8):	Dokumentacja API bibliotek HarfBuzz
@@ -199,9 +208,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING ChangeLog NEWS README THANKS TODO
-%attr(755,root,root) %{_bindir}/hb-ot-shape-closure
-%attr(755,root,root) %{_bindir}/hb-shape
-%attr(755,root,root) %{_bindir}/hb-view
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 
@@ -274,6 +280,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libharfbuzz-icu.a
 %endif
 %endif
+
+%files progs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/hb-ot-shape-closure
+%attr(755,root,root) %{_bindir}/hb-shape
+%attr(755,root,root) %{_bindir}/hb-view
 
 %files apidocs
 %defattr(644,root,root,755)
