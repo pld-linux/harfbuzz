@@ -65,7 +65,7 @@ Statyczna biblioteka HarfBuzz.
 
 %package gobject
 Summary:	Harfbuzz GObject interface
-Summary(pl.UTF-8):	Interfejs GObject do Harfbuzz
+Summary(pl.UTF-8):	Interfejs GObject do biblioteki Harfbuzz
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -73,11 +73,11 @@ Requires:	%{name} = %{version}-%{release}
 Harfbuzz GObject interface.
 
 %description gobject -l pl.UTF-8
-Interfejs GObject do Harfbuzz.
+Interfejs GObject do biblioteki Harfbuzz.
 
 %package gobject-devel
 Summary:	Header files for Harfbuzz GObject interface
-Summary(pl.UTF-8):	Pliki nagłówkowe interfejsu GObject do Harfbuzz
+Summary(pl.UTF-8):	Pliki nagłówkowe interfejsu GObject do biblioteki Harfbuzz
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-gobject = %{version}-%{release}
@@ -88,7 +88,8 @@ This is the package containing the header files for Harfbuzz GObject
 interface.
 
 %description gobject-devel -l pl.UTF-8
-Ten pakiet zawiera pliki nagłówkowe interfejsu GObject do Harfbuzz.
+Ten pakiet zawiera pliki nagłówkowe interfejsu GObject do biblioteki
+Harfbuzz.
 
 %package gobject-static
 Summary:	Static Harfbuzz GObject library
@@ -141,13 +142,17 @@ Static HarfBuzz ICU library.
 Biblioteka statyczna HarfBuzz ICU.
 
 %package progs
-Summary:	HarfBuzz programs
+Summary:	HarfBuzz command-line utilities
+Summary(pl.UTF-8):	Narzędzia HarfBuzz uruchamiane z linii poleceń
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	cairo >= 1.8.0
 
 %description progs
-HarfBuzz programs.
+HarfBuzz command-line utilities.
+
+%description progs -l pl.UTF-8
+Narzędzia HarfBuzz uruchamiane z linii poleceń.
 
 %package apidocs
 Summary:	HarfBuzz API documentation
@@ -211,25 +216,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 
-%files gobject
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
-%{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
-
-%files gobject-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
-%{_includedir}/harfbuzz/hb-gobject.h
-%{_includedir}/harfbuzz/hb-gobject-enums.h
-%{_includedir}/harfbuzz/hb-gobject-structs.h
-%{_pkgconfigdir}/harfbuzz-gobject.pc
-%{_datadir}/gir-1.0/HarfBuzz-0.0.gir
-
-%files gobject-static
-%defattr(644,root,root,755)
-%{_libdir}/libharfbuzz-gobject.a
-
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
@@ -260,6 +246,27 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
+%endif
+
+%files gobject
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
+%{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
+
+%files gobject-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
+%{_includedir}/harfbuzz/hb-gobject.h
+%{_includedir}/harfbuzz/hb-gobject-enums.h
+%{_includedir}/harfbuzz/hb-gobject-structs.h
+%{_pkgconfigdir}/harfbuzz-gobject.pc
+%{_datadir}/gir-1.0/HarfBuzz-0.0.gir
+
+%if %{with static_libs}
+%files gobject-static
+%defattr(644,root,root,755)
+%{_libdir}/libharfbuzz-gobject.a
 %endif
 
 %if %{with icu}
