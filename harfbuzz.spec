@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	0.9.35
-Release:	2
+Version:	0.9.36
+Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	531ee8650626ecddcd90b2a4637e31d4
+# Source0-md5:	8290671001399f762a5ec10b1a8c3519
 URL:		http://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.11.1
@@ -179,14 +179,6 @@ Dokumentacja API bibliotek HarfBuzz.
 cat >> src/harfbuzz.pc.in <<EOF
 Requires.private: glib-2.0 freetype2%{?with_graphite2: graphite2}
 EOF
-
-# test failing in 0.9.35; remove whole fragment when it gets fixed
-%if "%{version}" == "0.9.35"
-%{__sed} -i -e '/arabic-fallback-shaping.tests/d' test/shaping/Makefile.am
-%else
-echo "Recheck arabic-fallback-shaping.tests in current version"
-exit 1
-%endif
 
 %build
 %{__libtoolize}
