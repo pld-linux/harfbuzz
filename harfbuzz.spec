@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	1.3.2
+Version:	1.3.4
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	5986e1bfcd983d1f6caa53ef64c4abc5
+# Source0-md5:	065843caf247687b94126773285bc70f
 Patch0:		pc_deps.patch
 URL:		https://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	autoconf >= 2.64
@@ -22,7 +22,7 @@ BuildRequires:	cairo-devel >= 1.8.0
 # hb-fc-list is disabled in util/Makefile.am
 #BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 1:2.4.2
-BuildRequires:	glib2-devel >= 1:2.16
+BuildRequires:	glib2-devel >= 1:2.38
 BuildRequires:	gobject-introspection-devel >= 1.34.0
 %{?with_graphite2:BuildRequires:	graphite2-devel}
 BuildRequires:	gtk-doc >= 1.15
@@ -32,7 +32,7 @@ BuildRequires:	libtool >= 2:2.2
 BuildRequires:	pkgconfig >= 1:0.27
 BuildRequires:	sed >= 4.0
 Requires:	freetype >= 1:2.4.2
-Requires:	glib2 >= 1:2.16
+Requires:	glib2 >= 1:2.38
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,7 +48,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	freetype-devel >= 1:2.4.2
-Requires:	glib2-devel >= 1:2.16
+Requires:	glib2-devel >= 1:2.38
 %{?with_graphite2:Requires:	graphite2-devel}
 Requires:	libstdc++-devel
 
@@ -88,7 +88,6 @@ Summary(pl.UTF-8):	Pliki nagłówkowe interfejsu GObject do biblioteki Harfbuzz
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-gobject = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.12.2
 
 %description gobject-devel
 This is the package containing the header files for Harfbuzz GObject
@@ -241,6 +240,7 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_graphite2:%{_includedir}/harfbuzz/hb-graphite2.h}
 %{_includedir}/harfbuzz/hb-ot-font.h
 %{_includedir}/harfbuzz/hb-ot-layout.h
+%{_includedir}/harfbuzz/hb-ot-math.h
 %{_includedir}/harfbuzz/hb-ot-shape.h
 %{_includedir}/harfbuzz/hb-ot-tag.h
 %{_includedir}/harfbuzz/hb-ot.h
