@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	1.7.5
+Version:	1.7.6
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	1466ab51fc5aaa6af4065936939cec62
+# Source0-md5:	ffb94cf2942327344ac31330d07036ba
 Patch0:		pc_deps.patch
 URL:		https://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	autoconf >= 2.64
@@ -147,6 +147,44 @@ Static HarfBuzz ICU library.
 %description icu-static -l pl.UTF-8
 Biblioteka statyczna HarfBuzz ICU.
 
+%package subset
+Summary:	HarfBuzz text shaping library - font subsetter
+Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - font subsetter
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description subset
+HarfBuzz text shaping library - font subsetter.
+
+%description subset -l pl.UTF-8
+Biblioteka HarfBuzz do rysowania tekstu - font subsetter.
+
+%package subset-devel
+Summary:	Header file for HarfBuzz subset library
+Summary(pl.UTF-8):	Plik nagłówkowy biblioteki HarfBuzz subset
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-subset = %{version}-%{release}
+Requires:	libsubset-devel
+
+%description subset-devel
+Header file for HarfBuzz subset library.
+
+%description subset-devel -l pl.UTF-8
+Plik nagłówkowy biblioteki HarfBuzz subset.
+
+%package subset-static
+Summary:	Static HarfBuzz subset library
+Summary(pl.UTF-8):	Biblioteka statyczna HarfBuzz subset
+Group:		Development/Libraries
+Requires:	%{name}-subset-devel = %{version}-%{release}
+
+%description subset-static
+Static HarfBuzz subset library.
+
+%description subset-static -l pl.UTF-8
+Biblioteka statyczna HarfBuzz subset.
+
 %package progs
 Summary:	HarfBuzz command-line utilities
 Summary(pl.UTF-8):	Narzędzia HarfBuzz uruchamiane z linii poleceń
@@ -218,6 +256,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	icu -p /sbin/ldconfig
 %postun	icu -p /sbin/ldconfig
 
+%post	subset -p /sbin/ldconfig
+%postun	subset -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING ChangeLog NEWS README THANKS TODO
@@ -251,6 +292,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-unicode.h
 %{_includedir}/harfbuzz/hb-version.h
 %{_pkgconfigdir}/harfbuzz.pc
+%dir %{_libdir}/cmake/harfbuzz
+%{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
 
 %if %{with static_libs}
 %files static
@@ -298,10 +341,31 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %endif
 
+%files subset
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-subset.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-subset.so.0
+
+%files subset-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-subset.so
+%{_includedir}/harfbuzz/hb-subset.h
+%{_includedir}/harfbuzz/hb-subset-glyf.hh
+%{_includedir}/harfbuzz/hb-subset-plan.hh
+%{_includedir}/harfbuzz/hb-subset-private.hh
+%{_pkgconfigdir}/harfbuzz-subset.pc
+
+%if %{with static_libs}
+%files subset-static
+%defattr(644,root,root,755)
+%{_libdir}/libharfbuzz-subset.a
+%endif
+
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/hb-ot-shape-closure
 %attr(755,root,root) %{_bindir}/hb-shape
+%attr(755,root,root) %{_bindir}/hb-subset
 %attr(755,root,root) %{_bindir}/hb-view
 
 %files apidocs
