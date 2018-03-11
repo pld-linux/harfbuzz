@@ -9,7 +9,7 @@ Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
 Version:	1.7.6
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
@@ -21,6 +21,7 @@ BuildRequires:	automake >= 1:1.11.1
 BuildRequires:	cairo-devel >= 1.8.0
 # hb-fc-list is disabled in util/Makefile.am
 #BuildRequires:	fontconfig-devel
+%{?with_tests:BuildRequires:	fonttools}
 BuildRequires:	freetype-devel >= 1:2.4.2
 BuildRequires:	glib2-devel >= 1:2.38
 BuildRequires:	gobject-introspection-devel >= 1.34.0
@@ -160,18 +161,17 @@ HarfBuzz text shaping library - font subsetter.
 Biblioteka HarfBuzz do rysowania tekstu - font subsetter.
 
 %package subset-devel
-Summary:	Header file for HarfBuzz subset library
-Summary(pl.UTF-8):	Plik nagłówkowy biblioteki HarfBuzz subset
+Summary:	Header files for HarfBuzz subset library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz subset
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-subset = %{version}-%{release}
-Requires:	libsubset-devel
 
 %description subset-devel
-Header file for HarfBuzz subset library.
+Header files for HarfBuzz subset library.
 
 %description subset-devel -l pl.UTF-8
-Plik nagłówkowy biblioteki HarfBuzz subset.
+Pliki nagłówkowe biblioteki HarfBuzz subset.
 
 %package subset-static
 Summary:	Static HarfBuzz subset library
