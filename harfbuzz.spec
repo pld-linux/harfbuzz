@@ -30,6 +30,7 @@ BuildRequires:	gtk-doc >= 1.15
 %{?with_icu:BuildRequires:	libicu-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
+%{?with_tests:BuildRequires:	otsanitizer}
 BuildRequires:	pkgconfig >= 1:0.27
 BuildRequires:	sed >= 4.0
 Requires:	freetype >= 1:2.4.2
