@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	1.7.6
-Release:	3
+Version:	1.8.0
+Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	ffb94cf2942327344ac31330d07036ba
+# Source0-md5:	1023806c6a25a3fb11af0bcee8d0dc7c
 Patch0:		pc_deps.patch
 URL:		https://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	autoconf >= 2.64
@@ -280,6 +280,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-ft.h
 %{_includedir}/harfbuzz/hb-glib.h
 %{?with_graphite2:%{_includedir}/harfbuzz/hb-graphite2.h}
+%{_includedir}/harfbuzz/hb-map.h
 %{_includedir}/harfbuzz/hb-ot-font.h
 %{_includedir}/harfbuzz/hb-ot-layout.h
 %{_includedir}/harfbuzz/hb-ot-math.h
