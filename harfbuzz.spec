@@ -13,7 +13,7 @@ Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.bz2
-# Source0-md5:	1023806c6a25a3fb11af0bcee8d0dc7c
+# Source0-md5:	97cb89c6e2a914c05c8b7e858703885f
 Patch0:		pc_deps.patch
 URL:		https://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	autoconf >= 2.64
