@@ -17,7 +17,7 @@ Source0:	https://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version
 Patch0:		pc_deps.patch
 URL:		https://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	autoconf >= 2.64
-BuildRequires:	automake >= 1:1.11.1
+BuildRequires:	automake >= 1:1.13.0
 BuildRequires:	cairo-devel >= 1.8.0
 # hb-fc-list is disabled in util/Makefile.am
 #BuildRequires:	fontconfig-devel
