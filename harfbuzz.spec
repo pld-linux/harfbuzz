@@ -33,6 +33,7 @@ BuildRequires:	libtool >= 2:2.2
 %{?with_tests:BuildRequires:	otsanitizer}
 BuildRequires:	pkgconfig >= 1:0.27
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	freetype >= 1:2.9
 Requires:	glib2 >= 1:2.38
