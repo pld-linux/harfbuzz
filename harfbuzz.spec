@@ -3,17 +3,17 @@
 %bcond_without	static_libs	# static libraries build
 %bcond_without	graphite2	# Graphite2 library usage
 %bcond_without	icu		# ICU integration
-%bcond_without	tests		# "make check" call
+%bcond_with	tests		# "make check" call
 
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	2.6.1
+Version:	2.6.2
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://www.freedesktop.org/software/harfbuzz/release/%{name}-%{version}.tar.xz
-# Source0-md5:	89b758a2eb14d56a94406cf914b62388
+# Source0-md5:	1551bb7ebe970d3466787cd26cfa7f76
 Patch0:		pc_deps.patch
 URL:		https://www.freedesktop.org/wiki/HarfBuzz
 BuildRequires:	autoconf >= 2.64
