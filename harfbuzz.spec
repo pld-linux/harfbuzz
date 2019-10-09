@@ -3,7 +3,7 @@
 %bcond_without	static_libs	# static libraries build
 %bcond_without	graphite2	# Graphite2 library usage
 %bcond_without	icu		# ICU integration
-%bcond_with	tests		# "make check" call
+%bcond_with	tests		# "make check" call (cmap14 test fails as of 2.6.2 +otsanitizer-8.0.0 +fonttools-3.44.0)
 
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
@@ -30,7 +30,7 @@ BuildRequires:	gtk-doc >= 1.15
 %{?with_icu:BuildRequires:	libicu-devel}
 BuildRequires:	libstdc++-devel >= 6:4.9
 BuildRequires:	libtool >= 2:2.2
-%{?with_tests:BuildRequires:	otsanitizer}
+%{?with_tests:BuildRequires:	otsanitizer >= 8}
 BuildRequires:	pkgconfig >= 1:0.27
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
