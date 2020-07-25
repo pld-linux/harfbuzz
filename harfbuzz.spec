@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	2.6.8
-Release:	2
+Version:	2.7.0
+Release:	1
 License:	MIT
 Group:		Libraries
-Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	c8d4f2aeed6e576bd42f9dc6def1b1ae
+Source0:	https://github.com/harfbuzz/harfbuzz/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	fee932e4063cef1f39cc575ecc0d1213
 URL:		https://harfbuzz.github.io/
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.13.0
@@ -220,12 +220,14 @@ Dokumentacja API bibliotek HarfBuzz.
 
 %build
 %{__libtoolize}
+%{__gtkdocize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
 	--disable-silent-rules \
+	--enable-gtk-doc \
 	%{?with_static_libs:--enable-static} \
 	--with-cairo \
 	--with-freetype \
@@ -262,7 +264,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING ChangeLog NEWS README THANKS TODO
+%doc AUTHORS COPYING NEWS README.md THANKS TODO
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 
