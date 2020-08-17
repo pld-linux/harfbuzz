@@ -9,7 +9,7 @@ Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
 Version:	2.7.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/archive/%{version}/%{name}-%{version}.tar.gz
@@ -37,6 +37,7 @@ BuildRequires:	xz
 Requires:	freetype >= 1:2.9
 Requires:	glib2 >= 1:2.38
 %{?with_graphite2:Requires:	graphite2 >= 1.2.0}
+Obsoletes:	harfbuzz-gobject < 2.7.1-1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,6 +55,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	freetype-devel >= 1:2.9
 Requires:	glib2-devel >= 1:2.38
 %{?with_graphite2:Requires:	graphite2-devel >= 1.2.0}
+Obsoletes:	harfbuzz-gobject-devel < 2.7.1-1
 Requires:	libstdc++-devel
 
 %description devel
@@ -267,10 +269,14 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING NEWS README.md THANKS TODO
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
+%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
+%{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
+%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
 %dir %{_includedir}/harfbuzz
 %{_includedir}/harfbuzz/hb.h
 %{_includedir}/harfbuzz/hb-aat.h
@@ -284,6 +290,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-font.h
 %{_includedir}/harfbuzz/hb-ft.h
 %{_includedir}/harfbuzz/hb-glib.h
+%{_includedir}/harfbuzz/hb-gobject.h
+%{_includedir}/harfbuzz/hb-gobject-enums.h
+%{_includedir}/harfbuzz/hb-gobject-structs.h
 %{?with_graphite2:%{_includedir}/harfbuzz/hb-graphite2.h}
 %{_includedir}/harfbuzz/hb-map.h
 %{_includedir}/harfbuzz/hb-ot-color.h
@@ -304,29 +313,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-unicode.h
 %{_includedir}/harfbuzz/hb-version.h
 %{_pkgconfigdir}/harfbuzz.pc
+%{_pkgconfigdir}/harfbuzz-gobject.pc
 %dir %{_libdir}/cmake/harfbuzz
 %{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
+%{_datadir}/gir-1.0/HarfBuzz-0.0.gir
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
 %endif
-
-%files gobject
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
-%{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
-
-%files gobject-devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
-%{_includedir}/harfbuzz/hb-gobject.h
-%{_includedir}/harfbuzz/hb-gobject-enums.h
-%{_includedir}/harfbuzz/hb-gobject-structs.h
-%{_pkgconfigdir}/harfbuzz-gobject.pc
-%{_datadir}/gir-1.0/HarfBuzz-0.0.gir
 
 %if %{with static_libs}
 %files gobject-static
