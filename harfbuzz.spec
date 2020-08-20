@@ -9,7 +9,7 @@ Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
 Version:	2.7.1
-Release:	2
+Release:	3
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/archive/%{version}/%{name}-%{version}.tar.gz
@@ -37,7 +37,8 @@ BuildRequires:	xz
 Requires:	freetype >= 1:2.9
 Requires:	glib2 >= 1:2.38
 %{?with_graphite2:Requires:	graphite2 >= 1.2.0}
-Obsoletes:	harfbuzz-gobject < 2.7.1-1
+Provides:	harfbuzz-gobject = %{version}-%{release}
+Obsoletes:	harfbuzz-gobject < 2.7.1-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -55,8 +56,9 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	freetype-devel >= 1:2.9
 Requires:	glib2-devel >= 1:2.38
 %{?with_graphite2:Requires:	graphite2-devel >= 1.2.0}
-Obsoletes:	harfbuzz-gobject-devel < 2.7.1-1
 Requires:	libstdc++-devel
+Provides:	harfbuzz-gobject-devel = %{version}-%{release}
+Obsoletes:	harfbuzz-gobject-devel < 2.7.1-2
 
 %description devel
 Header files for HarfBuzz library.
@@ -69,51 +71,14 @@ Summary:	Static HarfBuzz library
 Summary(pl.UTF-8):	Statyczna biblioteka HarfBuzz
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Provides:	harfbuzz-gobject-static = %{version}-%{release}
+Obsoletes:	harfbuzz-gobject-static < 2.7.1-3
 
 %description static
 Static HarfBuzz library.
 
 %description static -l pl.UTF-8
 Statyczna biblioteka HarfBuzz.
-
-%package gobject
-Summary:	Harfbuzz GObject interface
-Summary(pl.UTF-8):	Interfejs GObject do biblioteki Harfbuzz
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description gobject
-Harfbuzz GObject interface.
-
-%description gobject -l pl.UTF-8
-Interfejs GObject do biblioteki Harfbuzz.
-
-%package gobject-devel
-Summary:	Header files for Harfbuzz GObject interface
-Summary(pl.UTF-8):	Pliki nagłówkowe interfejsu GObject do biblioteki Harfbuzz
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	%{name}-gobject = %{version}-%{release}
-
-%description gobject-devel
-This is the package containing the header files for Harfbuzz GObject
-interface.
-
-%description gobject-devel -l pl.UTF-8
-Ten pakiet zawiera pliki nagłówkowe interfejsu GObject do biblioteki
-Harfbuzz.
-
-%package gobject-static
-Summary:	Static Harfbuzz GObject library
-Summary(pl.UTF-8):	Statyczna biblioteka Harfbuzz GObject
-Group:		Development/Libraries
-Requires:	%{name}-gobject-devel = %{version}-%{release}
-
-%description gobject-static
-Static Harfbuzz GObject library.
-
-%description gobject-static -l pl.UTF-8
-Statyczna biblioteka Harfbuzz GObject.
 
 %package icu
 Summary:	HarfBuzz text shaping library - ICU integration
@@ -207,7 +172,7 @@ Narzędzia HarfBuzz uruchamiane z linii poleceń.
 Summary:	HarfBuzz API documentation
 Summary(pl.UTF-8):	Dokumentacja API bibliotek HarfBuzz
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -254,9 +219,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
-
-%post	gobject -p /sbin/ldconfig
-%postun	gobject -p /sbin/ldconfig
 
 %post	icu -p /sbin/ldconfig
 %postun	icu -p /sbin/ldconfig
@@ -322,11 +284,6 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
-%endif
-
-%if %{with static_libs}
-%files gobject-static
-%defattr(644,root,root,755)
 %{_libdir}/libharfbuzz-gobject.a
 %endif
 
