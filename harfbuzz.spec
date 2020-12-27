@@ -31,6 +31,7 @@ BuildRequires:	libstdc++-devel >= 6:4.9
 BuildRequires:	libtool >= 2:2.2
 %{?with_tests:BuildRequires:	otsanitizer >= 8}
 BuildRequires:	pkgconfig >= 1:0.28
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -172,9 +173,7 @@ Narzędzia HarfBuzz uruchamiane z linii poleceń.
 Summary:	HarfBuzz API documentation
 Summary(pl.UTF-8):	Dokumentacja API bibliotek HarfBuzz
 Group:		Documentation
-%if "%{_rpmversion}" >= "4.6"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description apidocs
 API documentation for HarfBuzz libraries.
