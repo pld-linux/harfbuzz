@@ -173,7 +173,7 @@ Narzędzia HarfBuzz uruchamiane z linii poleceń.
 Summary:	HarfBuzz API documentation
 Summary(pl.UTF-8):	Dokumentacja API bibliotek HarfBuzz
 Group:		Documentation
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 API documentation for HarfBuzz libraries.
