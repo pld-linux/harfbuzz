@@ -31,6 +31,7 @@ BuildRequires:	libstdc++-devel >= 6:4.9
 BuildRequires:	libtool >= 2:2.2
 %{?with_tests:BuildRequires:	otsanitizer >= 8}
 BuildRequires:	pkgconfig >= 1:0.28
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
