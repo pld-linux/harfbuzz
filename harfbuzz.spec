@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	4.0.1
+Version:	4.1.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	36644b731d7dc84b83cd6ccb6c0a6624
+# Source0-md5:	f678b3bb2f572aa2431ff7365480cd3a
 URL:		https://harfbuzz.github.io/
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.13.0
@@ -226,7 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING NEWS README.md THANKS TODO
+%doc AUTHORS COPYING NEWS README.md THANKS
 %attr(755,root,root) %{_libdir}/libharfbuzz.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
