@@ -8,18 +8,18 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	4.4.1
+Version:	5.0.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	f2763a24a6f5ddb26368b465bf51db0c
+# Source0-md5:	2502cab656c962363e5d08742e727ac4
 URL:		https://harfbuzz.github.io/
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.13.0
 BuildRequires:	cairo-devel >= 1.8.0
 %{?with_tests:BuildRequires:	fonttools}
-BuildRequires:	freetype-devel >= 1:2.9
+BuildRequires:	freetype-devel >= 1:2.11
 BuildRequires:	glib2-devel >= 1:2.38
 BuildRequires:	gobject-introspection-devel >= 1.34.0
 %{?with_graphite2:BuildRequires:	graphite2-devel >= 1.2.0}
@@ -34,7 +34,7 @@ BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires:	freetype >= 1:2.9
+Requires:	freetype >= 1:2.11
 Requires:	glib2 >= 1:2.38
 %{?with_graphite2:Requires:	graphite2 >= 1.2.0}
 Provides:	harfbuzz-gobject = %{version}-%{release}
@@ -53,7 +53,7 @@ Summary:	Header files for HarfBuzz library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	freetype-devel >= 1:2.9
+Requires:	freetype-devel >= 1:2.11
 Requires:	glib2-devel >= 1:2.38
 %{?with_graphite2:Requires:	graphite2-devel >= 1.2.0}
 Requires:	libstdc++-devel
