@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	6.0.0
+Version:	7.0.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	a3f9e51043a5a14b409c52fe4ab1e29e
+# Source0-md5:	5c7a6750760e4d6c098436a43542a7d0
 URL:		https://harfbuzz.github.io/
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.13.0
@@ -79,6 +79,43 @@ Static HarfBuzz library.
 
 %description static -l pl.UTF-8
 Statyczna biblioteka HarfBuzz.
+
+%package cairo
+Summary:	HarfBuzz text shaping library - cairo integration
+Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - integracja z cairo
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description cairo
+HarfBuzz text shaping library - cairo integration.
+
+%description cairo -l pl.UTF-8
+Biblioteka HarfBuzz do rysowania tekstu - integracja z cairo.
+
+%package cairo-devel
+Summary:	Header files for HarfBuzz cairo library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz cairo
+Group:		Development/Libraries
+Requires:	%{name}-cairo = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description cairo-devel
+Header files for HarfBuzz cairo library.
+
+%description cairo-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki HarfBuzz cairo.
+
+%package cairo-static
+Summary:	Static HarfBuzz cairo library
+Summary(pl.UTF-8):	Biblioteka statyczna HarfBuzz cairo
+Group:		Development/Libraries
+Requires:	%{name}-cairo-devel = %{version}-%{release}
+
+%description cairo-static
+Static HarfBuzz cairo library.
+
+%description cairo-static -l pl.UTF-8
+Biblioteka statyczna HarfBuzz cairo.
 
 %package icu
 Summary:	HarfBuzz text shaping library - ICU integration
@@ -218,6 +255,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	cairo -p /sbin/ldconfig
+%postun	cairo -p /sbin/ldconfig
+
 %post	icu -p /sbin/ldconfig
 %postun	icu -p /sbin/ldconfig
 
@@ -267,6 +307,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-ot-shape.h
 %{_includedir}/harfbuzz/hb-ot-var.h
 %{_includedir}/harfbuzz/hb-ot.h
+%{_includedir}/harfbuzz/hb-paint.h
 %{_includedir}/harfbuzz/hb-set.h
 %{_includedir}/harfbuzz/hb-shape-plan.h
 %{_includedir}/harfbuzz/hb-shape.h
@@ -284,6 +325,23 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
 %{_libdir}/libharfbuzz-gobject.a
+%endif
+
+%files cairo
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-cairo.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-cairo.so.0
+
+%files cairo-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-cairo.so
+%{_includedir}/harfbuzz/hb-cairo.h
+%{_pkgconfigdir}/harfbuzz-cairo.pc
+
+%if %{with static_libs}
+%files cairo-static
+%defattr(644,root,root,755)
+%{_libdir}/libharfbuzz-cairo.a
 %endif
 
 %if %{with icu}
@@ -325,6 +383,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/hb-info
 %attr(755,root,root) %{_bindir}/hb-ot-shape-closure
 %attr(755,root,root) %{_bindir}/hb-shape
 %attr(755,root,root) %{_bindir}/hb-subset
