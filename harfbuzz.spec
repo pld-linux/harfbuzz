@@ -8,23 +8,23 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	8.3.1
+Version:	8.4.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	fc4c1c0cb2e8a190db5007936f290047
+# Source0-md5:	961e77201ff4738382ea06e9f15ade70
 URL:		https://harfbuzz.github.io/
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.13.0
-BuildRequires:	cairo-devel >= 1.8.0
+BuildRequires:	cairo-devel >= 1.10.0
 %{?with_tests:BuildRequires:	fonttools}
 BuildRequires:	freetype-devel >= 1:2.11
 BuildRequires:	glib2-devel >= 1:2.38
 BuildRequires:	gobject-introspection-devel >= 1.34.0
 %{?with_graphite2:BuildRequires:	graphite2-devel >= 1.2.0}
 BuildRequires:	gtk-doc >= 1.15
-%{?with_icu:BuildRequires:	libicu-devel}
+%{?with_icu:BuildRequires:	libicu-devel >= 49.0}
 BuildRequires:	libstdc++-devel >= 6:4.9
 BuildRequires:	libtool >= 2:2.2
 %{?with_tests:BuildRequires:	otsanitizer >= 8}
@@ -122,6 +122,7 @@ Summary:	HarfBuzz text shaping library - ICU integration
 Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - integracja z ICU
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libicu >= 49.0
 
 %description icu
 HarfBuzz text shaping library - ICU integration.
@@ -135,7 +136,7 @@ Summary(pl.UTF-8):	Plik nagłówkowy biblioteki HarfBuzz ICU
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-icu = %{version}-%{release}
-Requires:	libicu-devel
+Requires:	libicu-devel >= 49.0
 
 %description icu-devel
 Header file for HarfBuzz ICU library.
@@ -197,7 +198,7 @@ Summary:	HarfBuzz command-line utilities
 Summary(pl.UTF-8):	Narzędzia HarfBuzz uruchamiane z linii poleceń
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	cairo >= 1.8.0
+Requires:	cairo >= 1.10.0
 
 %description progs
 HarfBuzz command-line utilities.
