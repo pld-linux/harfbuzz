@@ -8,15 +8,13 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	8.5.0
+Version:	9.0.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	81b9d7f1e19ce99c758d598c63543487
+# Source0-md5:	0035c129cb1646ab1cff65e5ef7153db
 URL:		https://harfbuzz.github.io/
-BuildRequires:	autoconf >= 2.64
-BuildRequires:	automake >= 1:1.13.0
 BuildRequires:	cairo-devel >= 1.10.0
 %{?with_tests:BuildRequires:	fonttools}
 BuildRequires:	freetype-devel >= 1:2.11
@@ -26,7 +24,8 @@ BuildRequires:	gobject-introspection-devel >= 1.34.0
 BuildRequires:	gtk-doc >= 1.15
 %{?with_icu:BuildRequires:	libicu-devel >= 49.0}
 BuildRequires:	libstdc++-devel >= 6:4.9
-BuildRequires:	libtool >= 2:2.2
+BuildRequires:	meson >= 0.55.0
+BuildRequires:	ninja
 %{?with_tests:BuildRequires:	otsanitizer >= 8}
 BuildRequires:	pkgconfig >= 1:0.28
 BuildRequires:	rpm-build >= 4.6
@@ -222,33 +221,25 @@ Dokumentacja API bibliotek HarfBuzz.
 %setup -q
 
 %build
-%{__libtoolize}
-%{__gtkdocize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--disable-silent-rules \
-	--enable-gtk-doc \
-	%{?with_static_libs:--enable-static} \
-	--with-cairo \
-	--with-freetype \
-	--with-glib \
-	--with-gobject \
-	%{?with_graphite2:--with-graphite2} \
-	--with-html-dir=%{_gtkdocdir} \
-	--with-icu%{!?with_icu:=no}
-%{__make}
+%meson build \
+	%{!?with_static_libs:--default-library=shared} \
+	-Dcairo=enabled \
+	-Ddocs=enabled \
+	-Dfreetype=enabled \
+	-Dglib=enabled \
+	-Dgobject=enabled \
+	-Dgraphite2=%{__enabled_disabled graphite2} \
+	-Dicu=%{__enabled_disabled icu} \
+	-Dtests=%{__enabled_disabled tests}
 
-%{?with_tests:%{__make} check}
+%ninja_build -C build
+
+%{?with_tests:%ninja_test -C build}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%ninja_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
