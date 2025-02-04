@@ -33,9 +33,9 @@ BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires:	freetype >= 1:2.11
-Requires:	glib2 >= 1:2.38
-%{?with_graphite2:Requires:	graphite2 >= 1.2.0}
+Requires:	freetype%{?_isa} >= 1:2.11
+Requires:	glib2%{?_isa} >= 1:2.38
+%{?with_graphite2:Requires:	graphite2%{?_isa} >= 1.2.0}
 Provides:	harfbuzz-gobject = %{version}-%{release}
 Obsoletes:	harfbuzz-gobject < 2.7.1-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -51,11 +51,11 @@ obsługująca wiele języków.
 Summary:	Header files for HarfBuzz library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	freetype-devel >= 1:2.11
-Requires:	glib2-devel >= 1:2.38
-%{?with_graphite2:Requires:	graphite2-devel >= 1.2.0}
-Requires:	libstdc++-devel
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	freetype-devel%{?_isa} >= 1:2.11
+Requires:	glib2-devel%{?_isa} >= 1:2.38
+%{?with_graphite2:Requires:	graphite2-devel%{?_isa} >= 1.2.0}
+Requires:	libstdc++-devel%{?_isa}
 Provides:	harfbuzz-gobject-devel = %{version}-%{release}
 Obsoletes:	harfbuzz-gobject-devel < 2.7.1-2
 
@@ -69,7 +69,7 @@ Pliki nagłówkowe biblioteki HarfBuzz.
 Summary:	Static HarfBuzz library
 Summary(pl.UTF-8):	Statyczna biblioteka HarfBuzz
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 Provides:	harfbuzz-gobject-static = %{version}-%{release}
 Obsoletes:	harfbuzz-gobject-static < 2.7.1-3
 
@@ -83,7 +83,7 @@ Statyczna biblioteka HarfBuzz.
 Summary:	HarfBuzz text shaping library - cairo integration
 Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - integracja z cairo
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description cairo
 HarfBuzz text shaping library - cairo integration.
@@ -95,8 +95,8 @@ Biblioteka HarfBuzz do rysowania tekstu - integracja z cairo.
 Summary:	Header files for HarfBuzz cairo library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz cairo
 Group:		Development/Libraries
-Requires:	%{name}-cairo = %{version}-%{release}
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-cairo%{?_isa} = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description cairo-devel
 Header files for HarfBuzz cairo library.
@@ -108,7 +108,7 @@ Pliki nagłówkowe biblioteki HarfBuzz cairo.
 Summary:	Static HarfBuzz cairo library
 Summary(pl.UTF-8):	Biblioteka statyczna HarfBuzz cairo
 Group:		Development/Libraries
-Requires:	%{name}-cairo-devel = %{version}-%{release}
+Requires:	%{name}-cairo-devel%{?_isa} = %{version}-%{release}
 
 %description cairo-static
 Static HarfBuzz cairo library.
@@ -120,8 +120,8 @@ Biblioteka statyczna HarfBuzz cairo.
 Summary:	HarfBuzz text shaping library - ICU integration
 Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - integracja z ICU
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	libicu >= 49.0
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	libicu%{?_isa} >= 49.0
 
 %description icu
 HarfBuzz text shaping library - ICU integration.
@@ -133,9 +133,9 @@ Biblioteka HarfBuzz do rysowania tekstu - integracja z ICU.
 Summary:	Header file for HarfBuzz ICU library
 Summary(pl.UTF-8):	Plik nagłówkowy biblioteki HarfBuzz ICU
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	%{name}-icu = %{version}-%{release}
-Requires:	libicu-devel >= 49.0
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
+Requires:	%{name}-icu%{?_isa} = %{version}-%{release}
+Requires:	libicu-devel%{?_isa} >= 49.0
 
 %description icu-devel
 Header file for HarfBuzz ICU library.
@@ -147,7 +147,7 @@ Plik nagłówkowy biblioteki HarfBuzz ICU.
 Summary:	Static HarfBuzz ICU library
 Summary(pl.UTF-8):	Biblioteka statyczna HarfBuzz ICU
 Group:		Development/Libraries
-Requires:	%{name}-icu-devel = %{version}-%{release}
+Requires:	%{name}-icu-devel%{?_isa} = %{version}-%{release}
 
 %description icu-static
 Static HarfBuzz ICU library.
@@ -159,7 +159,7 @@ Biblioteka statyczna HarfBuzz ICU.
 Summary:	HarfBuzz text shaping library - font subsetter
 Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - font subsetter
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description subset
 HarfBuzz text shaping library - font subsetter.
@@ -171,8 +171,8 @@ Biblioteka HarfBuzz do rysowania tekstu - font subsetter.
 Summary:	Header files for HarfBuzz subset library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz subset
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	%{name}-subset = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
+Requires:	%{name}-subset%{?_isa} = %{version}-%{release}
 
 %description subset-devel
 Header files for HarfBuzz subset library.
@@ -184,7 +184,7 @@ Pliki nagłówkowe biblioteki HarfBuzz subset.
 Summary:	Static HarfBuzz subset library
 Summary(pl.UTF-8):	Biblioteka statyczna HarfBuzz subset
 Group:		Development/Libraries
-Requires:	%{name}-subset-devel = %{version}-%{release}
+Requires:	%{name}-subset-devel%{?_isa} = %{version}-%{release}
 
 %description subset-static
 Static HarfBuzz subset library.
@@ -196,8 +196,8 @@ Biblioteka statyczna HarfBuzz subset.
 Summary:	HarfBuzz command-line utilities
 Summary(pl.UTF-8):	Narzędzia HarfBuzz uruchamiane z linii poleceń
 Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	cairo >= 1.10.0
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	cairo%{?_isa} >= 1.10.0
 
 %description progs
 HarfBuzz command-line utilities.
