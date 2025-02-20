@@ -29,7 +29,7 @@ BuildRequires:	ninja
 %{?with_tests:BuildRequires:	otsanitizer >= 8}
 BuildRequires:	pkgconfig >= 1:0.28
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -221,7 +221,7 @@ Dokumentacja API bibliotek HarfBuzz.
 %setup -q
 
 %build
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared} \
 	-Dcairo=enabled \
 	-Ddocs=enabled \
@@ -232,14 +232,14 @@ Dokumentacja API bibliotek HarfBuzz.
 	-Dicu=%{__enabled_disabled icu} \
 	-Dtests=%{__enabled_disabled tests}
 
-%ninja_build -C build
+%meson_build
 
-%{?with_tests:%ninja_test -C build}
+%{?with_tests:%meson_test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
