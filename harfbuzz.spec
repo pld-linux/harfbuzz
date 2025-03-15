@@ -1,7 +1,7 @@
 #
 # Conditional build:
-%bcond_without	static_libs	# static libraries build
-%bcond_without	graphite2	# Graphite2 library usage
+%bcond_without	static_libs	# static libraries
+%bcond_without	graphite2	# Graphite2 complementary shaper
 %bcond_without	icu		# ICU integration
 %bcond_with	tests		# "make check" call (cmap14 test fails as of 2.6.2 +otsanitizer-8.0.0 +fonttools-3.44.0)
 
@@ -16,6 +16,7 @@ Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{nam
 # Source0-md5:	9ff3796c1b8ae03540e466168c6a5bd1
 URL:		https://harfbuzz.github.io/
 BuildRequires:	cairo-devel >= 1.10.0
+BuildRequires:	chafa-devel >= 1.6.0
 %{?with_tests:BuildRequires:	fonttools}
 BuildRequires:	freetype-devel >= 1:2.11
 BuildRequires:	glib2-devel >= 1:2.38
@@ -55,7 +56,7 @@ Requires:	%{name}%{?_isa} = %{version}-%{release}
 Requires:	freetype-devel%{?_isa} >= 1:2.11
 Requires:	glib2-devel%{?_isa} >= 1:2.38
 %{?with_graphite2:Requires:	graphite2-devel%{?_isa} >= 1.2.0}
-Requires:	libstdc++-devel%{?_isa}
+Requires:	libstdc++-devel%{?_isa} >= 6:4.9
 Provides:	harfbuzz-gobject-devel = %{version}-%{release}
 Obsoletes:	harfbuzz-gobject-devel < 2.7.1-2
 
@@ -198,6 +199,7 @@ Summary(pl.UTF-8):	Narzędzia HarfBuzz uruchamiane z linii poleceń
 Group:		Libraries
 Requires:	%{name}%{?_isa} = %{version}-%{release}
 Requires:	cairo%{?_isa} >= 1.10.0
+Requires:	chafa-libs%{?_isa} >= 1.6.0
 
 %description progs
 HarfBuzz command-line utilities.
@@ -224,12 +226,14 @@ Dokumentacja API bibliotek HarfBuzz.
 %meson \
 	%{!?with_static_libs:--default-library=shared} \
 	-Dcairo=enabled \
+	-Dchafa=enabled \
 	-Ddocs=enabled \
 	-Dfreetype=enabled \
 	-Dglib=enabled \
 	-Dgobject=enabled \
 	-Dgraphite2=%{__enabled_disabled graphite2} \
 	-Dicu=%{__enabled_disabled icu} \
+	-Dintrospection=enabled \
 	-Dtests=%{__enabled_disabled tests}
 
 %meson_build
