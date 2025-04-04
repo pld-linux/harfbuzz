@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	11.0.0
+Version:	11.0.1
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	6c05bc46689a6f2a98b784c683654fd4
+# Source0-md5:	5de828e8e05c3f69d98c3c34eb6faa5c
 URL:		https://harfbuzz.github.io/
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	chafa-devel >= 1.6.0
@@ -23,6 +23,7 @@ BuildRequires:	glib2-devel >= 1:2.38
 BuildRequires:	gobject-introspection-devel >= 1.34.0
 %{?with_graphite2:BuildRequires:	graphite2-devel >= 1.2.0}
 BuildRequires:	gtk-doc >= 1.15
+BuildRequires:	help2man
 %{?with_icu:BuildRequires:	libicu-devel >= 49.0}
 BuildRequires:	libstdc++-devel >= 6:4.9
 BuildRequires:	meson >= 0.55.0
@@ -381,10 +382,13 @@ rm -rf $RPM_BUILD_ROOT
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/hb-info
-%attr(755,root,root) %{_bindir}/hb-ot-shape-closure
 %attr(755,root,root) %{_bindir}/hb-shape
 %attr(755,root,root) %{_bindir}/hb-subset
 %attr(755,root,root) %{_bindir}/hb-view
+%{_mandir}/man1/hb-info.1*
+%{_mandir}/man1/hb-shape.1*
+%{_mandir}/man1/hb-subset.1*
+%{_mandir}/man1/hb-view.1*
 
 %files apidocs
 %defattr(644,root,root,755)
