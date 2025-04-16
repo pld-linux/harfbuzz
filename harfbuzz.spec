@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	11.0.1
+Version:	11.1.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	5de828e8e05c3f69d98c3c34eb6faa5c
+# Source0-md5:	08ec9e7844e2aa2fddc37bf69114cdfa
 URL:		https://harfbuzz.github.io/
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	chafa-devel >= 1.6.0
@@ -26,7 +26,7 @@ BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	help2man
 %{?with_icu:BuildRequires:	libicu-devel >= 49.0}
 BuildRequires:	libstdc++-devel >= 6:4.9
-BuildRequires:	meson >= 0.55.0
+BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja
 %{?with_tests:BuildRequires:	otsanitizer >= 8}
 BuildRequires:	pkgconfig >= 1:0.28
@@ -306,6 +306,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-ot-var.h
 %{_includedir}/harfbuzz/hb-ot.h
 %{_includedir}/harfbuzz/hb-paint.h
+%{_includedir}/harfbuzz/hb-script-list.h
 %{_includedir}/harfbuzz/hb-set.h
 %{_includedir}/harfbuzz/hb-shape-plan.h
 %{_includedir}/harfbuzz/hb-shape.h
