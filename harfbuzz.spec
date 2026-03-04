@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	12.3.2
+Version:	13.0.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	10040432f566e50bda84bfba8ad80b8d
+# Source0-md5:	ec479992a0736f0a3609f119ef93844a
 URL:		https://harfbuzz.github.io/
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	chafa-devel >= 1.6.0
@@ -268,12 +268,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
+%attr(755,root,root) %{_libdir}/libharfbuzz-raster.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-raster.so.0
+%attr(755,root,root) %{_libdir}/libharfbuzz-vector.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-vector.so.0
 %{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
+%attr(755,root,root) %{_libdir}/libharfbuzz-raster.so
+%attr(755,root,root) %{_libdir}/libharfbuzz-vector.so
 %dir %{_includedir}/harfbuzz
 %{_includedir}/harfbuzz/hb.h
 %{_includedir}/harfbuzz/hb-aat.h
@@ -306,15 +312,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-ot-var.h
 %{_includedir}/harfbuzz/hb-ot.h
 %{_includedir}/harfbuzz/hb-paint.h
+%{_includedir}/harfbuzz/hb-raster.h
 %{_includedir}/harfbuzz/hb-script-list.h
 %{_includedir}/harfbuzz/hb-set.h
 %{_includedir}/harfbuzz/hb-shape-plan.h
 %{_includedir}/harfbuzz/hb-shape.h
 %{_includedir}/harfbuzz/hb-style.h
 %{_includedir}/harfbuzz/hb-unicode.h
+%{_includedir}/harfbuzz/hb-vector.h
 %{_includedir}/harfbuzz/hb-version.h
 %{_pkgconfigdir}/harfbuzz.pc
 %{_pkgconfigdir}/harfbuzz-gobject.pc
+%{_pkgconfigdir}/harfbuzz-raster.pc
+%{_pkgconfigdir}/harfbuzz-vector.pc
 %dir %{_libdir}/cmake/harfbuzz
 %{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
 %{_datadir}/gir-1.0/HarfBuzz-0.0.gir
@@ -324,6 +334,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
 %{_libdir}/libharfbuzz-gobject.a
+%{_libdir}/libharfbuzz-raster.a
+%{_libdir}/libharfbuzz-vector.a
 %endif
 
 %files cairo
@@ -385,10 +397,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hb-info
 %attr(755,root,root) %{_bindir}/hb-shape
 %attr(755,root,root) %{_bindir}/hb-subset
+%attr(755,root,root) %{_bindir}/hb-vector
 %attr(755,root,root) %{_bindir}/hb-view
 %{_mandir}/man1/hb-info.1*
 %{_mandir}/man1/hb-shape.1*
 %{_mandir}/man1/hb-subset.1*
+%{_mandir}/man1/hb-vector.1*
 %{_mandir}/man1/hb-view.1*
 
 %files apidocs
