@@ -8,12 +8,13 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	13.0.1
+Version:	13.1.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	170d294d9a20b4392e1142161664466e
+# Source0-md5:	a0b1d0f3b47d33f2c3c99e04482f52ea
+Patch0:		raster-chafa-dep.patch
 URL:		https://harfbuzz.github.io/
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	chafa-devel >= 1.6.0
@@ -25,6 +26,7 @@ BuildRequires:	gobject-introspection-devel >= 1.34.0
 BuildRequires:	gtk-doc >= 1.15
 BuildRequires:	help2man
 %{?with_icu:BuildRequires:	libicu-devel >= 49.0}
+BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel >= 6:4.9
 BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja
@@ -157,6 +159,43 @@ Static HarfBuzz ICU library.
 %description icu-static -l pl.UTF-8
 Biblioteka statyczna HarfBuzz ICU.
 
+%package raster
+Summary:	HarfBuzz text shaping library - glyph rasterization
+Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - rasteryzacja glifów
+Group:		Libraries
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+
+%description raster
+HarfBuzz text shaping library - glyph rasterization.
+
+%description raster -l pl.UTF-8
+Biblioteka HarfBuzz do rysowania tekstu - rasteryzacja glifów.
+
+%package raster-devel
+Summary:	Header files for HarfBuzz raster library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz raster
+Group:		Development/Libraries
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
+Requires:	%{name}-raster%{?_isa} = %{version}-%{release}
+
+%description raster-devel
+Header files for HarfBuzz raster library.
+
+%description raster-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki HarfBuzz raster.
+
+%package raster-static
+Summary:	Static HarfBuzz raster library
+Summary(pl.UTF-8):	Biblioteka statyczna HarfBuzz raster
+Group:		Development/Libraries
+Requires:	%{name}-raster-devel%{?_isa} = %{version}-%{release}
+
+%description raster-static
+Static HarfBuzz raster library.
+
+%description raster-static -l pl.UTF-8
+Biblioteka statyczna HarfBuzz raster.
+
 %package subset
 Summary:	HarfBuzz text shaping library - font subsetter
 Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - font subsetter
@@ -222,6 +261,7 @@ Dokumentacja API bibliotek HarfBuzz.
 
 %prep
 %setup -q
+%patch -P0 -p1
 
 %build
 %meson \
@@ -258,6 +298,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	icu -p /sbin/ldconfig
 %postun	icu -p /sbin/ldconfig
 
+%post	raster -p /sbin/ldconfig
+%postun	raster -p /sbin/ldconfig
+
 %post	subset -p /sbin/ldconfig
 %postun	subset -p /sbin/ldconfig
 
@@ -268,8 +311,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
-%attr(755,root,root) %{_libdir}/libharfbuzz-raster.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-raster.so.0
 %attr(755,root,root) %{_libdir}/libharfbuzz-vector.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz-vector.so.0
 %{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
@@ -278,7 +319,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
-%attr(755,root,root) %{_libdir}/libharfbuzz-raster.so
 %attr(755,root,root) %{_libdir}/libharfbuzz-vector.so
 %dir %{_includedir}/harfbuzz
 %{_includedir}/harfbuzz/hb.h
@@ -312,7 +352,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-ot-var.h
 %{_includedir}/harfbuzz/hb-ot.h
 %{_includedir}/harfbuzz/hb-paint.h
-%{_includedir}/harfbuzz/hb-raster.h
 %{_includedir}/harfbuzz/hb-script-list.h
 %{_includedir}/harfbuzz/hb-set.h
 %{_includedir}/harfbuzz/hb-shape-plan.h
@@ -323,7 +362,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-version.h
 %{_pkgconfigdir}/harfbuzz.pc
 %{_pkgconfigdir}/harfbuzz-gobject.pc
-%{_pkgconfigdir}/harfbuzz-raster.pc
 %{_pkgconfigdir}/harfbuzz-vector.pc
 %dir %{_libdir}/cmake/harfbuzz
 %{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
@@ -334,7 +372,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
 %{_libdir}/libharfbuzz-gobject.a
-%{_libdir}/libharfbuzz-raster.a
 %{_libdir}/libharfbuzz-vector.a
 %endif
 
@@ -374,6 +411,23 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %endif
 
+%files raster
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-raster.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-raster.so.0
+
+%files raster-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-raster.so
+%{_includedir}/harfbuzz/hb-raster.h
+%{_pkgconfigdir}/harfbuzz-raster.pc
+
+%if %{with static_libs}
+%files raster-static
+%defattr(644,root,root,755)
+%{_libdir}/libharfbuzz-raster.a
+%endif
+
 %files subset
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz-subset.so.*.*.*
@@ -395,11 +449,13 @@ rm -rf $RPM_BUILD_ROOT
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/hb-info
+%attr(755,root,root) %{_bindir}/hb-raster
 %attr(755,root,root) %{_bindir}/hb-shape
 %attr(755,root,root) %{_bindir}/hb-subset
 %attr(755,root,root) %{_bindir}/hb-vector
 %attr(755,root,root) %{_bindir}/hb-view
 %{_mandir}/man1/hb-info.1*
+%{_mandir}/man1/hb-raster.1*
 %{_mandir}/man1/hb-shape.1*
 %{_mandir}/man1/hb-subset.1*
 %{_mandir}/man1/hb-vector.1*
