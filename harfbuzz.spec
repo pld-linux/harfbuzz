@@ -177,6 +177,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz raster
 Group:		Development/Libraries
 Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 Requires:	%{name}-raster%{?_isa} = %{version}-%{release}
+Requires:	libpng-devel
 
 %description raster-devel
 Header files for HarfBuzz raster library.
@@ -252,6 +253,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz vector
 Group:		Development/Libraries
 Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 Requires:	%{name}-vector%{?_isa} = %{version}-%{release}
+Requires:	zlib-devel
 
 %description vector-devel
 Header files for HarfBuzz vector library.
@@ -276,6 +278,10 @@ Summary:	HarfBuzz command-line utilities
 Summary(pl.UTF-8):	Narzędzia HarfBuzz uruchamiane z linii poleceń
 Group:		Libraries
 Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}-cairo%{?_isa} = %{version}-%{release}
+Requires:	%{name}-raster%{?_isa} = %{version}-%{release}
+Requires:	%{name}-subset%{?_isa} = %{version}-%{release}
+Requires:	%{name}-vector%{?_isa} = %{version}-%{release}
 Requires:	cairo%{?_isa} >= 1.10.0
 Requires:	chafa-libs%{?_isa} >= 1.6.0
 
