@@ -8,13 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	13.1.0
+Version:	13.1.1
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	a0b1d0f3b47d33f2c3c99e04482f52ea
-Patch0:		raster-chafa-dep.patch
+# Source0-md5:	c819543bfc08d7b8f11b74874ec03ca7
 URL:		https://harfbuzz.github.io/
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	chafa-devel >= 1.6.0
@@ -37,6 +36,7 @@ BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+BuildRequires:	zlib-devel
 Requires:	freetype%{?_isa} >= 1:2.11
 Requires:	glib2%{?_isa} >= 1:2.38
 %{?with_graphite2:Requires:	graphite2%{?_isa} >= 1.2.0}
@@ -233,6 +233,44 @@ Static HarfBuzz subset library.
 %description subset-static -l pl.UTF-8
 Biblioteka statyczna HarfBuzz subset.
 
+%package vector
+Summary:	HarfBuzz text shaping library - glyph vector output
+Summary(pl.UTF-8):	Biblioteka HarfBuzz do rysowania tekstu - zapisywanie glifów w formacie wektorowym
+Group:		Libraries
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+
+%description vector
+HarfBuzz text shaping library - glyph vector output.
+
+%description vector -l pl.UTF-8
+Biblioteka HarfBuzz do rysowania tekstu - zapisywanie glifów w
+formacie wektorowym.
+
+%package vector-devel
+Summary:	Header files for HarfBuzz vector library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HarfBuzz vector
+Group:		Development/Libraries
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
+Requires:	%{name}-vector%{?_isa} = %{version}-%{release}
+
+%description vector-devel
+Header files for HarfBuzz vector library.
+
+%description vector-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki HarfBuzz vector.
+
+%package vector-static
+Summary:	Static HarfBuzz vector library
+Summary(pl.UTF-8):	Biblioteka statyczna HarfBuzz vector
+Group:		Development/Libraries
+Requires:	%{name}-vector-devel%{?_isa} = %{version}-%{release}
+
+%description vector-static
+Static HarfBuzz vector library.
+
+%description vector-static -l pl.UTF-8
+Biblioteka statyczna HarfBuzz vector.
+
 %package progs
 Summary:	HarfBuzz command-line utilities
 Summary(pl.UTF-8):	Narzędzia HarfBuzz uruchamiane z linii poleceń
@@ -261,7 +299,6 @@ Dokumentacja API bibliotek HarfBuzz.
 
 %prep
 %setup -q
-%patch -P0 -p1
 
 %build
 %meson \
@@ -304,6 +341,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	subset -p /sbin/ldconfig
 %postun	subset -p /sbin/ldconfig
 
+%post	vector -p /sbin/ldconfig
+%postun	vector -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING NEWS README.md THANKS
@@ -311,15 +351,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
-%attr(755,root,root) %{_libdir}/libharfbuzz-vector.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-vector.so.0
 %{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
-%attr(755,root,root) %{_libdir}/libharfbuzz-vector.so
 %dir %{_includedir}/harfbuzz
 %{_includedir}/harfbuzz/hb.h
 %{_includedir}/harfbuzz/hb-aat.h
@@ -358,11 +395,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-shape.h
 %{_includedir}/harfbuzz/hb-style.h
 %{_includedir}/harfbuzz/hb-unicode.h
-%{_includedir}/harfbuzz/hb-vector.h
 %{_includedir}/harfbuzz/hb-version.h
 %{_pkgconfigdir}/harfbuzz.pc
 %{_pkgconfigdir}/harfbuzz-gobject.pc
-%{_pkgconfigdir}/harfbuzz-vector.pc
 %dir %{_libdir}/cmake/harfbuzz
 %{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
 %{_datadir}/gir-1.0/HarfBuzz-0.0.gir
@@ -372,7 +407,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
 %{_libdir}/libharfbuzz-gobject.a
-%{_libdir}/libharfbuzz-vector.a
 %endif
 
 %files cairo
@@ -444,6 +478,23 @@ rm -rf $RPM_BUILD_ROOT
 %files subset-static
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz-subset.a
+%endif
+
+%files vector
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-vector.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-vector.so.0
+
+%files vector-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libharfbuzz-vector.so
+%{_includedir}/harfbuzz/hb-vector.h
+%{_pkgconfigdir}/harfbuzz-vector.pc
+
+%if %{with static_libs}
+%files vector-static
+%defattr(644,root,root,755)
+%{_libdir}/libharfbuzz-vector.a
 %endif
 
 %files progs
