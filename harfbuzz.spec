@@ -8,17 +8,20 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	13.2.0
+Version:	14.0.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	5982daaaf8e62396aeeca1162880d470
+# Source0-md5:	c8f3cf2bab86c2edd662e7beca0240fb
 URL:		https://harfbuzz.github.io/
+BuildRequires:	OpenGL-devel
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	chafa-devel >= 1.6.0
 %{?with_tests:BuildRequires:	fonttools}
 BuildRequires:	freetype-devel >= 1:2.11
+BuildRequires:	glew-devel
+BuildRequires:	glfw-devel >= 3
 BuildRequires:	glib2-devel >= 1:2.38
 BuildRequires:	gobject-introspection-devel >= 1.34.0
 %{?with_graphite2:BuildRequires:	graphite2-devel >= 1.2.0}
@@ -357,12 +360,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz.so.0
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gobject.so.0
+%attr(755,root,root) %{_libdir}/libharfbuzz-gpu.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libharfbuzz-gpu.so.0
 %{_libdir}/girepository-1.0/HarfBuzz-0.0.typelib
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz.so
 %attr(755,root,root) %{_libdir}/libharfbuzz-gobject.so
+%attr(755,root,root) %{_libdir}/libharfbuzz-gpu.so
 %dir %{_includedir}/harfbuzz
 %{_includedir}/harfbuzz/hb.h
 %{_includedir}/harfbuzz/hb-aat.h
@@ -381,6 +387,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-gobject.h
 %{_includedir}/harfbuzz/hb-gobject-enums.h
 %{_includedir}/harfbuzz/hb-gobject-structs.h
+%{_includedir}/harfbuzz/hb-gpu.h
 %{?with_graphite2:%{_includedir}/harfbuzz/hb-graphite2.h}
 %{_includedir}/harfbuzz/hb-map.h
 %{_includedir}/harfbuzz/hb-ot-color.h
@@ -404,6 +411,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-version.h
 %{_pkgconfigdir}/harfbuzz.pc
 %{_pkgconfigdir}/harfbuzz-gobject.pc
+%{_pkgconfigdir}/harfbuzz-gpu.pc
 %dir %{_libdir}/cmake/harfbuzz
 %{_libdir}/cmake/harfbuzz/harfbuzz-config.cmake
 %{_datadir}/gir-1.0/HarfBuzz-0.0.gir
@@ -413,6 +421,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libharfbuzz.a
 %{_libdir}/libharfbuzz-gobject.a
+%{_libdir}/libharfbuzz-gpu.a
 %endif
 
 %files cairo
@@ -505,6 +514,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/hb-gpu
 %attr(755,root,root) %{_bindir}/hb-info
 %attr(755,root,root) %{_bindir}/hb-raster
 %attr(755,root,root) %{_bindir}/hb-shape
