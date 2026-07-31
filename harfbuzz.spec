@@ -8,12 +8,12 @@
 Summary:	HarfBuzz - internationalized text shaping library
 Summary(pl.UTF-8):	HarfBuzz - biblioteka rysująca tekst z obsługą wielu języków
 Name:		harfbuzz
-Version:	14.2.1
+Version:	14.3.0
 Release:	1
 License:	MIT
 Group:		Libraries
 Source0:	https://github.com/harfbuzz/harfbuzz/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	dda477eb1b44ac816ec1a8e4effee1af
+# Source0-md5:	4e77f2cb3725024340fabcdb5c83721c
 URL:		https://harfbuzz.github.io/
 BuildRequires:	OpenGL-devel
 BuildRequires:	cairo-devel >= 1.10.0
@@ -394,6 +394,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/harfbuzz/hb-map.h
 %{_includedir}/harfbuzz/hb-ot-color.h
 %{_includedir}/harfbuzz/hb-ot-deprecated.h
+%{_includedir}/harfbuzz/hb-ot-fetch.h
 %{_includedir}/harfbuzz/hb-ot-font.h
 %{_includedir}/harfbuzz/hb-ot-layout.h
 %{_includedir}/harfbuzz/hb-ot-math.h
@@ -488,6 +489,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libharfbuzz-subset.so
 %{_includedir}/harfbuzz/hb-subset.h
+%{_includedir}/harfbuzz/hb-subset-depend.h
 %{_includedir}/harfbuzz/hb-subset-serialize.h
 %{_pkgconfigdir}/harfbuzz-subset.pc
 
